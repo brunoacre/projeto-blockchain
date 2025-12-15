@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Certificado - Blockchain</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="emitir.html">Emitir</a>
+            <a href="validar.html" class="active">Validar</a>
+        </div>
+        <h1>Verificar Autenticidade</h1>
+        <p style="text-align: center; color: #64748b; font-size: 0.9em;">Insira o hash do certificado para verificar sua validade na blockchain.</p>
+        
+        <form id="formValidacao">
+            <div class="form-group">
+                <label>Hash do Certificado</label>
+                <input type="text" name="hash" required placeholder="Cole o hash aqui (64 caracteres)">
+            </div>
+            <button type="submit">Verificar na Blockchain</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('formValidacao').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            const hash = e.target.hash.value.trim();
+            
+            resultDiv.style.display = 'none';
+
+            try {
+                const response = await fetch(`/api/certificados/validar/${hash}`);
+                const json = await response.json();
+
+                if (json.success && json.found) {
+                    const cert = json.certificado;
+                    const isValid = json.valid;
+                    
+                    resultDiv.className = isValid ? 'success' : 'error';
+                    resultDiv.innerHTML = `
+                        <strong>${isValid ? '✅ VÁLIDO E AUTÊNTICO' : 'ADULTERADO OU INVÁLIDO'}</strong><br>
+                        <hr style="border:0; border-top:1px solid rgba(0,0,0,0.1); margin: 10px 0;">
+                        <strong>Aluno:</strong> ${cert.nome}<br>
+                        <strong>Curso:</strong> ${cert.curso}<br>
+                        <strong>Data Emissão:</strong> ${new Date(cert.dataEmissao).toLocaleDateString()}<br>
+                        <br>
+                        <small>Block ID: ${json.block.id}</small>
+                    `;
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `<strong>Não encontrado:</strong> Este certificado não existe nesta blockchain.`;
+                }
+            } catch (error) {
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `<strong>Erro de conexão:</strong> ${error.message}`;
+            }
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

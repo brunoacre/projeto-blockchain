@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emitir Certificado - Blockchain</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="emitir.html" class="active">Emitir</a>
+            <a href="validar.html">Validar</a>
+        </div>
+        <h1>Novo Certificado</h1>
+        
+        <form id="formEmissao">
+            <div class="form-group">
+                <label>Nome do Aluno</label>
+                <input type="text" name="nome" required placeholder="Ex: João Silva">
+            </div>
+            <div class="form-group">
+                <label>CPF</label>
+                <input type="text" name="cpf" required placeholder="000.000.000-00">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required placeholder="aluno@email.com">
+            </div>
+            <div class="form-group">
+                <label>Curso</label>
+                <input type="text" name="curso" required placeholder="Ex: Blockchain Fundamentals">
+            </div>
+            <div class="form-group">
+                <label>Carga Horária (horas)</label>
+                <input type="number" name="cargaHoraria" required placeholder="Ex: 40">
+            </div>
+            <div class="form-group">
+                <label>Coordenação</label>
+                <input type="text" name="coordenacao" required placeholder="Ex: Tecnologia">
+            </div>
+            <button type="submit">Registrar na Blockchain</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('formEmissao').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            const btn = e.target.querySelector('button');
+            
+            // Loading state
+            btn.textContent = 'Processando...';
+            btn.disabled = true;
+            resultDiv.style.display = 'none';
+
+            // Coletar dados
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.cargaHoraria = parseInt(data.cargaHoraria);
+
+            try {
+                const response = await fetch('/api/certificados/emitir', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const json = await response.json();
+
+                if (json.success) {
+                    resultDiv.className = 'success';
+                    resultDiv.innerHTML = `
+                        <strong>✅ Sucesso!</strong><br>
+                        Certificado registrado no bloco.<br><br>
+                        <small>Hash para validação:</small><br>
+                        <span class="blockchain-badge">${json.data.hash}</span>
+                    `;
+                    e.target.reset();
+                } else {
+                    throw new Error(json.error || 'Erro desconhecido');
+                }
+            } catch (error) {
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `<strong>❌ Erro:</strong> ${error.message}`;
+            } finally {
+                resultDiv.style.display = 'block';
+                btn.textContent = 'Registrar na Blockchain';
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
