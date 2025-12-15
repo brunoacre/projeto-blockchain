@@ -1,6 +1,6 @@
-# 🎓 Blockchain Certificados - Sistema de Emissão e Validação
+# Blockchain Certificados - Sistema de Emissão e Validação
 
-> **Status:** 🚧 Em Desenvolvimento (Fase de Mock/Simulação) | **Versão:** 0.0.1
+> **Status:** Em Desenvolvimento (Fase de Mock/Simulação) | **Versão:** 0.0.1
 
 Este projeto é uma aplicação Fullstack (Backend Node.js + Frontend HTML/JS) para a **emissão e validação de certificados acadêmicos**, utilizando conceitos fundamentais de Blockchain para garantir a autenticidade e integridade dos documentos.
 
@@ -8,7 +8,7 @@ O sistema opera atualmente com um **Mock Blockchain** (Ledger simulada em arquiv
 
 ---
 
-## 🎯 Funcionalidades
+## Funcionalidades
 
 - **Emissão de Certificados:** Registro de documentos com nome, CPF, curso e carga horária.
 - **Hashing Criptográfico:** Cada certificado gera um hash único (SHA-256).
@@ -18,7 +18,7 @@ O sistema opera atualmente com um **Mock Blockchain** (Ledger simulada em arquiv
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Backend:** Node.js, Express
 - **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
@@ -29,7 +29,7 @@ O sistema opera atualmente com um **Mock Blockchain** (Ledger simulada em arquiv
 
 ---
 
-## 🧩 Arquitetura e O "Mock Blockchain"
+## Arquitetura e O "Mock Blockchain"
 
 Para facilitar o desenvolvimento inicial e a validação acadêmica sem a complexidade de infraestrutura de rede, implementamos um **MockBlockchainService**.
 
