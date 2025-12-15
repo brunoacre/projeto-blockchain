@@ -101,17 +101,8 @@ Próximos Passos
 ----------------------------------------------------------------------------------------------------------------------------------------
 Estrutura do Projeto
 
-├── public/              # Frontend (HTML, CSS, JS)
-├── src/
-│   ├── config/          # Configurações de ambiente
-│   ├── controllers/     # Controladores da API
-│   ├── services/        # Lógica de Blockchain (Mock e Interfaces)
-│   ├── utils/           # Funções de Criptografia (Hash)
-│   ├── validators/      # Validação de dados (Joi)
-│   ├── routes/          # Rotas do Express
-│   └── app.js           # Configuração do Servidor
-├── data/                # Blockchain Ledger (JSON)
-└── tests/               # Testes Automatizados
+<img width="641" height="250" alt="image" src="https://github.com/user-attachments/assets/340893b8-26bc-4887-9e17-60fce9fb3943" />
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 Licença
 Este projeto é open-source e está sob a licença MIT. Desenvolvido para fins acadêmicos e de pesquisa.
